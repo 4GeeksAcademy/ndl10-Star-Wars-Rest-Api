@@ -10,7 +10,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.email
 
     def serialize(self):
         return {
@@ -68,23 +68,25 @@ class Planets(db.Model):
             
         }
     
-
 class Favorites(db.Model):
     __tablename__ = 'favorites'
 
-    Id = db.Column(db.Integer, primary_key = True)
-    user_Id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-    people_Id = db.Column(db.Integer, db.ForeignKey('people.id'), nullable = False)
-    planets_Id = db.Column(db.Integer, db.ForeignKey('planets.Id'), nullable = False)
+    Id = db.Column(db.Integer, primary_key=True)
+    user_Id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    people_Id = db.Column(db.Integer, db.ForeignKey('people.id'), nullable=False)
+    planets_Id = db.Column(db.Integer, db.ForeignKey('planets.Id'), nullable=False)
+    vehicles_Id = db.Column(db.Integer, db.ForeignKey('Vehicles.id'), nullable=False)
 
     user = db.relationship(User)
     people = db.relationship(People)
     planets = db.relationship(Planets)
+    vehicles = db.relationship(Vehicles)
 
     def serialize(self):
         return { 
-        "ID": self.Id,
-        "user_Id": self.user_Id,
-        "people_Id": self.people_Id,
-        "planets_Id": self.planets_Id
+            "ID": self.Id,
+            "user_Id": self.user_Id,
+            "people_Id": self.people_Id,
+            "planets_Id": self.planets_Id,
+            "vehicles_Id": self.vehicles_Id
         }
